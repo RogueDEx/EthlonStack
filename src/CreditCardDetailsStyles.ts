@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+import { WidthContainer } from './AppStyles'
+
+export const Container = styled(WidthContainer)`
   display: flex;
   flex-direction: column;
   max-width: 500px;

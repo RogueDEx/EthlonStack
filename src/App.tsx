@@ -5,6 +5,8 @@ import { Account } from 'web3-core'
 import { CreditCardDetails } from './CreditCardDetails'
 import { VibeSelect } from './VibeSelect'
 import { Button, Title, Label, AppContainer } from './AppStyles'
+import { Orders } from './Orders'
+import { PlaceOrder } from './PlaceOrder'
 
 const App: React.FC = () => {
   const [account, setAccount] = useState<Account | null>(null)
@@ -33,7 +35,9 @@ const App: React.FC = () => {
       <CreditCardDetails />
       <Button onClick={submitData}>Bid</Button>
       <VibeSelect setColony={setColony} />
-    </AppContainer>
+      <Orders colony={colony} />
+      <PlaceOrder colony={colony} />
+    </AppContainer >
   )
 }
 

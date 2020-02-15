@@ -4,6 +4,11 @@ export const AppContainer = styled.div`
   padding: 30px;
 `
 
+export const WidthContainer = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+`
+
 export const Button = styled.div`
   background: palevioletred;
   border-radius: 3px;
