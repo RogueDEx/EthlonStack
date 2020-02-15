@@ -1,14 +1,16 @@
-import * as React from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Web3 from 'web3'
 import { Account } from 'web3-core'
 
-import { Button, Title, BankNumber, Balance } from './AppStyles'
+import { CreditCardDetails } from './CreditCardDetails'
+import { VibeSelect } from './VibeSelect'
+import { Button, Title, Label, AppContainer } from './AppStyles'
 
 const App: React.FC = () => {
-  const [account, setAccount] = React.useState<Account | null>(null)
-  const [colony, setColony] = React.useState<string | null>(null)
+  const [account, setAccount] = useState<Account | null>(null)
+  const [colony, setColony] = useState<string>('Elysium')
 
-  React.useEffect(() => {
+  useEffect(() => {
     const web3 = new Web3('ws://deploy.radar.tech/ethdenver2020')
     const whatAmI = web3.eth.accounts.create()
     setAccount(web3.eth.accounts.create())
@@ -26,15 +28,12 @@ const App: React.FC = () => {
     }
   }
   return (
-    <>
-      <Title>{`Colony ${colony}`}</Title>
-      <BankNumber>{mockCreditCard}</BankNumber>
-      <Balance>`${balance.toFixed(2)}`</Balance>
-      <Button onClick={submitData}>Purchase land</Button>
-      {['Elysium', 'Hellas', 'Planum Australe', 'Meridiani Planum'].map((colony, index) => (
-        <div key={index} onClick={() => setColony(colony)}>{colony}</div>
-      ))}
-    </>
+    <AppContainer>
+      <Title>{`${colony} Colony`}</Title>
+      <CreditCardDetails />
+      <Button onClick={submitData}>Bid</Button>
+      <VibeSelect setColony={setColony} />
+    </AppContainer>
   )
 }
 

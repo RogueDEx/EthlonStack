@@ -1,10 +1,18 @@
 import styled from 'styled-components'
 
-export const Button = styled.button`
+export const AppContainer = styled.div`
+  padding: 30px;
+`
+
+export const Button = styled.div`
   background: palevioletred;
   border-radius: 3px;
   border: none;
   color: white;
+  width: 60px;
+  padding: 3px;
+  text-align: center;
+  margin: 10px auto;
 `
 
 export const Title = styled.div`
@@ -17,15 +25,7 @@ export const Title = styled.div`
   }
 `
 
-export const BankNumber = styled.span`
-  background: #fff;
-  color: #666;
-  border: 1px solid red;
+export const Label = styled.div`
+  margin-top: 10px;
+  margin-bottom: 5px;
 `
-
-export const Balance = styled.span`
-  background: #fff;
-  color: #666;
-  border: 1px solid red;
-`
-
