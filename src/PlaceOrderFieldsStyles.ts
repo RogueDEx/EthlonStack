@@ -7,4 +7,12 @@ export const PlaceOrderFieldsContainer = styled(WidthContainer)`
   flex-direction: column;
   width: 150px;
   text-align: center;
-` 
+`
+
+export const CustomInput = styled.input`
+  height: 20px;
+  width: 100px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+`

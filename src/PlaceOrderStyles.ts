@@ -12,5 +12,6 @@ export const AssetPriceTitle = styled.div`
 `
 
 export const AssetPrice = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 60px;
+  text-align: center;
 `

@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react"
 
 import { PlaceOrderFields } from './PlaceOrderFields'
-import { Label, WidthContainer } from './AppStyles'
+import { Label, WidthContainer, Button } from './AppStyles'
 import { AssetPriceTitle, AssetPrice, InnerContainer } from './PlaceOrderStyles'
 
 interface PlaceOrderProps {
@@ -11,9 +11,21 @@ interface PlaceOrderProps {
 export const PlaceOrder: FC<PlaceOrderProps> = ({ colony }) => {
   const [input, setInput] = useState<string>(colony)
   const [output, setOutput] = useState<string>('USD')
-  const [inputAmount, setInputAmount] = useState<string>('0')
-  const [outputAmount, setOutputAmount] = useState<string>('0')
+  const [inputAmount, setInputAmount] = useState<number>(0)
+  const [outputAmount, setOutputAmount] = useState<number>(0)
 
+  const assetPrice = inputAmount !== 0 && outputAmount !== 0 ?
+    output === 'USD' ?
+      `${(outputAmount / inputAmount).toFixed(4)} ${output} per ${input}` :
+      `${(inputAmount / outputAmount).toFixed(4)} ${input} per ${output}`
+    : ''
+
+  const placeOrder = () => {
+    if (inputAmount === 0 || outputAmount === 0) {
+      alert('please enter both an input and output amount')
+    }
+    console.log('place order here')
+  }
   return (
     <WidthContainer>
       <Label>Order bid</Label>
@@ -27,8 +39,9 @@ export const PlaceOrder: FC<PlaceOrderProps> = ({ colony }) => {
       </InnerContainer>
       <AssetPriceTitle>Asset Price</AssetPriceTitle>
       <AssetPrice>
-        {Number(inputAmount) / Number(outputAmount)}
+        {assetPrice}
       </AssetPrice>
+      <Button onClick={placeOrder}>Place bid</Button>
     </WidthContainer>
   )
 }

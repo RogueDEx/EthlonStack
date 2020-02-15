@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react"
 
-import { PlaceOrderFieldsContainer } from './PlaceOrderFieldsStyles'
+import { PlaceOrderFieldsContainer, CustomInput } from './PlaceOrderFieldsStyles'
 
 interface PlaceOrderFieldsProps {
   label: string
   type: string
-  setAmount: (amount: string) => void
+  setAmount: (amount: number) => void
 }
 
 export const PlaceOrderFields: FC<PlaceOrderFieldsProps> = ({ label, type, setAmount }) => (
@@ -13,6 +13,6 @@ export const PlaceOrderFields: FC<PlaceOrderFieldsProps> = ({ label, type, setAm
     <div>{label}</div>
     <div>{type}</div>
     <div>Quantity</div>
-    <input onChange={(e) => e.target.value} />
+    <CustomInput type="number" onChange={(e) => setAmount(Number(e.target.value))} />
   </PlaceOrderFieldsContainer>
 )

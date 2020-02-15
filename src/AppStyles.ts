@@ -14,10 +14,11 @@ export const Button = styled.div`
   border-radius: 3px;
   border: none;
   color: white;
-  width: 60px;
+  width: 120px;
   padding: 3px;
   text-align: center;
   margin: 10px auto;
+  cursor: pointer;
 `
 
 export const Title = styled.div`
