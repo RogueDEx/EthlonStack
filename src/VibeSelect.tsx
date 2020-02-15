@@ -11,7 +11,7 @@ interface VibeSelectProps {
 
 export const VibeSelect: FC<VibeSelectProps> = ({ setColony }) => (
   <Container>
-    <Label>Select a colony</Label>
+    Select a colony
     {['Elysium', 'Hellas', 'Planum Australe', 'Meridiani Planum'].map((colony, index) => (
       <VibeTag key={index} onClick={() => setColony(colony)}>{colony}</VibeTag>
     ))}

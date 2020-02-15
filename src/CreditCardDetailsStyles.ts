@@ -15,7 +15,7 @@ export const HalfFieldContainer = styled.div`
 
 export const HalfField = styled.div`
   width: 30%;
-  border: 1px solid palevioletred;
+  border: 1px solid #e09b7e;
   border-radius: 4px;
   padding: 5px;
   margin-bottom: 3px;
