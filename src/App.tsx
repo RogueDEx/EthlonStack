@@ -108,7 +108,7 @@ const App: FC = () => {
         <AppImage src="/ethlon.png" />
         <AppMainTitle>Martian Real Estate for Everyone</AppMainTitle>
         <AppSubTitle>Secured on Ethereum. No gas required</AppSubTitle>
-        <Button onClick={() => window.scrollBy(0, 850)}>Get vibe</Button>
+        <Button onClick={() => window.scrollBy(0, 1000)}>Get vibe</Button>
         <AppSubBar>Currently for sale:</AppSubBar>
       </AppMain>
       <ElysiumMain><AppMainTitle>{colony}</AppMainTitle></ElysiumMain>
@@ -126,7 +126,7 @@ const App: FC = () => {
         />
       }
       <Orders colony={colony} />
-      <PlaceOrder tokenBalance={tokenBalance} colony={colony} />
+      <PlaceOrder tokenBalance={tokenBalance} colony={colony} walletAddress={account && account.address || ''} />
     </AppContainer>
   )
 }
