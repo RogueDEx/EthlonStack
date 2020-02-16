@@ -3,17 +3,19 @@ import Web3 from 'web3'
 import { Account } from 'web3-core'
 
 import { VibeTag, Container } from './VibeSelectStyles'
+import { Vibe } from './App'
 import { Label } from './AppStyles'
 
 interface VibeSelectProps {
   setColony: Dispatch<SetStateAction<string>>
+  vibes: Array<Vibe>
 }
 
-export const VibeSelect: FC<VibeSelectProps> = ({ setColony }) => (
+export const VibeSelect: FC<VibeSelectProps> = ({ setColony, vibes }) => (
   <Container>
     Select a colony
-    {['Elysium', 'Hellas', 'Planum Australe', 'Meridiani Planum'].map((colony, index) => (
-      <VibeTag key={index} onClick={() => setColony(colony)}>{colony}</VibeTag>
+    {vibes.map(({ name }, index) => (
+      <VibeTag key={index} onClick={() => setColony(name)}>{name}</VibeTag>
     ))}
   </Container>
 )
