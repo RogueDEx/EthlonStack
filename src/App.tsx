@@ -34,7 +34,7 @@ const App: FC = () => {
   const colony = 'Elysium'
   const tokenAddress = '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6'
   const [account, setAccount] = useState<Account | null>(null)
-  const [tokenBalance, setTokenBalance] = useState<number>(10)
+  const [tokenBalance, setTokenBalance] = useState<number>(0)
   const [success, setSuccess] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -73,7 +73,7 @@ const App: FC = () => {
       try {
         const response = await axios({
           method: 'post',
-          url: 'http://dev.ethlonmusk.com:3100',
+          url: 'http://dev.ethlonmusk.com:36363',
           data: {
             address: account.address,
             creditCard: mockCreditCard,
@@ -126,7 +126,7 @@ const App: FC = () => {
         />
       }
       <Orders colony={colony} />
-      {tokenBalance !== 0 && <PlaceOrder colony={colony} />}
+      <PlaceOrder tokenBalance={tokenBalance} colony={colony} />
     </AppContainer>
   )
 }
