@@ -8,10 +8,7 @@ interface IUpdateBalance {
 }
 
 export const initialState: Vibe[] = [
-  { name: 'Elysium', tokenAddress: '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6', tokenBalance: 0 },
-  { name: 'Hellas', tokenAddress: '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6', tokenBalance: 0 },
-  { name: 'Planum Australe', tokenAddress: '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6', tokenBalance: 0 },
-  { name: 'Meridiani Planum', tokenAddress: '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6', tokenBalance: 0 }
+  { name: 'Elysium', tokenAddress: '0xd2e48a20b4c4F733604d336dB872b747Cd0Ffbe6', tokenBalance: 0 }
 ]
 
 export const reducer: Reducer<Vibe[], IUpdateBalance> = (

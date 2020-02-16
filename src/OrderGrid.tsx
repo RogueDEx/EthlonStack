@@ -3,55 +3,38 @@ import React, { FC } from "react"
 import { Label, WidthContainer } from './AppStyles'
 import { Table } from './OrderGridStyles'
 
+export interface OrdersType {
+  price: number
+  amount: number
+  expires: string
+}
+
 interface OrderGridProps {
   colony: string
   label: string
+  orders: OrdersType[]
 }
 
-export const OrderGrid: FC<OrderGridProps> = ({ colony, label }) => {
-  const orders = [
-    {
-      price: 0.50,
-      amount: 20,
-      expires: '1hr'
-    },
-    {
-      price: 0.70,
-      amount: 25,
-      expires: '1hr'
-    },
-    {
-      price: 0.80,
-      amount: 10,
-      expires: '1hr'
-    },
-    {
-      price: 0.90,
-      amount: 5,
-      expires: '1hr'
-    }
-  ]
-  return (
-    <WidthContainer>
-      <Label>{label}</Label>
-      <Table>
-        <thead>
-          <tr>
-            <th>{`${colony} Amount`}</th>
-            <th>Price</th>
-            <th>Expires</th>
+export const OrderGrid: FC<OrderGridProps> = ({ colony, label, orders }) => (
+  <WidthContainer>
+    <Label>{label}</Label>
+    <Table>
+      <thead>
+        <tr>
+          <th>{`${colony} Amount`}</th>
+          <th>Price</th>
+          <th>Expires</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map(({ price, amount, expires }, index) =>
+          <tr key={index}>
+            <td>{amount}</td>
+            <td>{`$${price.toFixed(2)}`}</td>
+            <td>{expires}</td>
           </tr>
-        </thead>
-        <tbody>
-          {orders.map(({ price, amount, expires }) =>
-            <tr>
-              <td>{amount}</td>
-              <td>{`$${price.toFixed(2)}`}</td>
-              <td>{expires}</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-    </WidthContainer>
-  )
-}
+        )}
+      </tbody>
+    </Table>
+  </WidthContainer>
+)

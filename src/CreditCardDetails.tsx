@@ -1,6 +1,4 @@
 import * as React from 'react'
-import Web3 from 'web3'
-import { Account } from 'web3-core'
 
 import { Container, Field, HalfField, HalfFieldContainer } from './CreditCardDetailsStyles'
 import { Label } from './AppStyles'
