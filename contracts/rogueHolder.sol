@@ -75,10 +75,10 @@ contract rogueHolder is ERC721Full {
    * @param _contract the address of the cloner shim contract that will create the object
    *                  that is to be tracked.
    */
-  function mintObject(address _contract) external {
-    address obj = clonerInterface(_contract).clone(msg.sender);
+  function mintObject(address _contract, address who) external {
+    address obj = clonerInterface(_contract).clone(address(this), who);
     clonedFrom[obj] = _contract;
-    _mint(msg.sender, uint256(obj));
+    _mint(who, uint256(obj));
   }
 
   /**
