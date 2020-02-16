@@ -7,6 +7,9 @@ export const Container = styled(WidthContainer)`
   flex-direction: column;
   max-width: 500px;
   margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  margin-top: 50px;
 `
 
 export const HalfFieldContainer = styled.div`
@@ -24,6 +27,8 @@ export const HalfField = styled.div`
 
 export const Field = styled(HalfField)`
   width: 100%;
+  height: 20px;
   margin-right: 0;
+  margin-bottom: 10px;
 `
 

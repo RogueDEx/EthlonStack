@@ -1,26 +1,26 @@
 import React, { FC, useEffect, useReducer, useState } from 'react'
 import Web3 from 'web3'
 import { Account } from 'web3-core'
-import { AbiItem } from 'web3-utils'
+// import { AbiItem } from 'web3-utils'
 import { Contract } from 'web3-eth-contract'
+import axios from 'axios'
 
-import elysiumJson from './abi/elysium.json'
-import hellasJson from './abi/hellas.json'
-import meridianiPlanumJson from './abi/meridiani_planum.json'
-import planumAustraleJson from './abi/planum_australe.json'
+import erc20Json from './abi/erc20.json'
 import { CreditCardDetails } from './CreditCardDetails'
 import { VibeSelect } from './VibeSelect'
 import { reducer, initialState } from './VibesReducer'
 import {
   Button,
-  ColonyTitle,
   AppHeader,
   AppLogo,
   AppImage,
   AppLogoText,
-  AppTitle,
   AppMain,
-  AppMainTitle
+  AppMainTitle,
+  AppSubTitle,
+  AppSubBar,
+  AppContainer,
+  AppLogoImage
 } from './AppStyles'
 import { Orders } from './Orders'
 import { PlaceOrder } from './PlaceOrder'
@@ -39,7 +39,7 @@ const App: React.FC = () => {
   useEffect(() => {
     async function setupAndGetBalances() {
       const storageKey = 'privateKey'
-      const web3 = new Web3('ws://deploy.radar.tech/ethdenver2020')
+      const web3 = new Web3('wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac')
       const privateKey = localStorage.getItem(storageKey)
       const account = privateKey == null ?
         web3.eth.accounts.create() :
@@ -54,36 +54,12 @@ const App: React.FC = () => {
       const walletAddress: string = account.address
 
       return vibes.map(async ({ tokenAddress, name }) => {
-        let minABI: AbiItem
-        switch (name) {
-          case 'Elysium': {
-            minABI = elysiumJson
-          }
-          case 'Hellas': {
-            minABI = hellasJson
-            break;
-          }
-          case 'Planum Australe': {
-            minABI = planumAustraleJson
-            break;
-          }
-          case 'Meridiani Planum': {
-            minABI = meridianiPlanumJson
-            break;
-          }
-          default: {
-            throw new Error('unexpected name')
-            break;
-          }
-        }
-
-        // Get ERC20 Token contract instance
-        const contract: Contract = new web3.eth.Contract(minABI, tokenAddress)
-        const balance = await contract.methods.balanceOf(walletAddress).call()
-        console.log('balance', balance)
+        // @ts-ignore
+        const contract: Contract = new web3.eth.Contract(erc20Json, tokenAddress)
+        const fetchBalance = await contract.methods.balanceOf(walletAddress).call()
         return dispatch({
           type: 'update-balance',
-          tokenBalance: balance,
+          tokenBalance: Number(fetchBalance),
           name
         })
       })
@@ -96,35 +72,53 @@ const App: React.FC = () => {
   const mockCreditCard = '1234-1234-1234-1234'
   const { tokenBalance } = vibes.find(({ name }) => name === colony) as Vibe
 
-  const submitData = () => {
+  const submitData = async () => {
+    console.log('submitting')
     if (account != null) {
-      console.log('submit me to the backend', account.address, mockCreditCard)
+      const response = await axios({
+        method: 'post',
+        url: 'http://dev.ethlonmusk.com/',
+        data: {
+          address: account.address,
+          creditCard: mockCreditCard,
+          balance
+        }
+      })
+      if (response.status === 200) {
+        return alert('transacion posted. you will receive your tokens shortly')
+      }
+      return alert('transacion failed. Please contact support')
     } else {
       alert('there is no account')
     }
   }
+
   return (
-    <>
+    <AppContainer>
       <AppHeader>
         <AppLogo>
-          <AppLogoText>Ethlon Musk</AppLogoText>
-          <AppImage src="/ethlon.png" height="50" />
+          <AppLogoImage src="/ethlon.png" />
+          <AppLogoText>Vibe</AppLogoText>
         </AppLogo>
-        <AppTitle>Mars Real Estate For Sale</AppTitle>
-        <ColonyTitle>{`Selected: ${colony} Colony`}</ColonyTitle>
       </AppHeader>
-      <AppMain><AppMainTitle>Claim your Martian parcel with Vibe</AppMainTitle>
-        <VibeSelect setColony={setColony} vibes={vibes} />
+      <AppMain>
+        <AppImage src="/ethlon.png" />
+        <AppMainTitle>Martian Real Estate for Everyone</AppMainTitle>
+        <AppSubTitle>Secured on Ethereum. No gas required</AppSubTitle>
+        <Button onClick={() => window.scrollBy(0, 550)}>Get vibe</Button>
+        <AppSubBar>Currently for sale:</AppSubBar>
+        <AppMainTitle>{colony}</AppMainTitle>
       </AppMain>
       <CreditCardDetails />
       <Button onClick={submitData}>Bid</Button>
-      {tokenBalance !== 0 &&
+      {tokenBalance === 0 &&
         <>
+          {/* <VibeSelect setColony={setColony} vibes={vibes} /> */}
           <Orders colony={colony} />
           <PlaceOrder colony={colony} />
         </>
       }
-    </>
+    </AppContainer>
   )
 }
 

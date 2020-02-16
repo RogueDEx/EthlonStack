@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react"
 
 import { PlaceOrderFields } from './PlaceOrderFields'
-import { Label, WidthContainer, Button } from './AppStyles'
-import { AssetPriceTitle, AssetPrice, InnerContainer } from './PlaceOrderStyles'
+import { Label, Button } from './AppStyles'
+import { AssetPriceTitle, AssetPrice, InnerContainer, PlaceOrderContainer } from './PlaceOrderStyles'
 
 interface PlaceOrderProps {
   colony: string
@@ -27,7 +27,7 @@ export const PlaceOrder: FC<PlaceOrderProps> = ({ colony }) => {
     console.log('place order here')
   }
   return (
-    <WidthContainer>
+    <PlaceOrderContainer>
       <Label>Order bid</Label>
       <InnerContainer>
         <PlaceOrderFields label="Input" type={input} setAmount={setInputAmount} />
@@ -42,6 +42,6 @@ export const PlaceOrder: FC<PlaceOrderProps> = ({ colony }) => {
         {assetPrice}
       </AssetPrice>
       <Button onClick={placeOrder}>Place bid</Button>
-    </WidthContainer>
+    </PlaceOrderContainer>
   )
 }

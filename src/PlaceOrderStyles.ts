@@ -1,5 +1,13 @@
 import styled from 'styled-components'
 
+import { WidthContainer } from './AppStyles'
+
+export const PlaceOrderContainer = styled(WidthContainer)`
+  background: white;
+  border-radius: 8px;
+  margin-top: 50px;
+`
+
 export const InnerContainer = styled.div`
   display: flex;
   width: 100%;
