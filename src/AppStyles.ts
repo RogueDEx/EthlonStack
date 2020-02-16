@@ -11,7 +11,7 @@ export const Button = styled.div`
   border-radius: 8px;
   border: 1px solid green;
   color: white;
-  width: 120px;
+  width: 200px;
   height: 25px;
   padding: 3px;
   text-align: center;
@@ -62,11 +62,22 @@ export const AppMain = styled.div`
   background-image: url("/meridiani.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 750px;
+  height: 550px;
   color: white;
   font-size: 48px;
   text-align: center;
   padding-top: 40px;
+`
+
+export const ElysiumMain = styled.div`
+  height: 400px;
+  background-image: url("/elysium.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  padding-top: 120px;
 `
 
 export const AppMainTitle = styled.div`
@@ -76,6 +87,8 @@ export const AppMainTitle = styled.div`
 export const AppSubTitle = styled.div`
   margin-top: 15px;
   font-size: 20px;
+  color: white;
+  text-align: center;
 `
 
 export const AppSubBar = styled.div`
@@ -92,4 +105,10 @@ export const AppSubBar = styled.div`
 export const AppContainer = styled.div`
   background: black;
   padding-bottom: 50px;
+`
+
+export const MainLabel = styled.div`
+  text-align: center;
+  font-size: 24px;
+  padding-top: 15px;
 `
