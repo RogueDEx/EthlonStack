@@ -45,8 +45,8 @@ var whoami = "0x64e877fEA0e030064055a7c811E8f5A1752965f4" ; //rinkby account
 
 /* Connect...
  */
-//const web3 = new Web3("ws://localhost:8546");
-const web3 = new Web3( "wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac")
+const web3 = new Web3("ws://localhost:8546");
+//const web3 = new Web3( "wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac")
 //const web3 = new Web3( "wss://mainnet.infura.io/ws" );
 //
 const E = web3.eth;
@@ -78,8 +78,6 @@ const updateContract = (addr, value) => {
     }
   } );
 }
-const updateToken = updateContract;
-const updateRogueObject = updateContract;
 
 /*  Rogue Holder tokens stuff...
  */
@@ -88,23 +86,25 @@ let rogueHolder = contractCache(erc721abi, aRogueHolder) ;
 const id2addr = id => U.toChecksumAddress(U.padLeft(U.toHex(id),40));
 
 const getHolderRogueList = (from) =>
-  rogueHolder.methods.balanceOf(target).call({from}) // call as target even though no private key
+  rogueHolder.methods.balanceOf(from).call({from}) // call as target even though no private key
     .then( n => Promise.all( 
-      range(n).map( (_,i) => rogueHolder.methods.tokenOfOwnerByIndex(target, i).call({from}) )
-    ));
+      range(n).map( (_,i) => ( rogueHolder.methods.tokenOfOwnerByIndex(target, i).call({from}) ) )
+    ))
+    .then( bist => bist.map(id2addr) )
+    .then( list => { updateContract(aRogueHolder, {[from]:list} ); return list;} )
 
 const getERC20Statics = (ledger) => {
   const C = contractCache(erc20abi, ledger).methods
   return Promise.all([
-    C.decimals().call().then( decimals => updateToken(ledger, {decimals}) ), 
-    C.symbol().call().then( symbol => updateToken(ledger, {symbol}) ), 
-    C.name().call().then( name => updateToken(ledger, {name}) ), 
+    C.decimals().call().then( decimals => updateContract(ledger, {decimals}) ), 
+    C.symbol().call().then( symbol => updateContract(ledger, {symbol}) ), 
+    C.name().call().then( name => updateContract(ledger, {name}) ), 
   ]);
 }
 
 const getRogueBalances = (addr) => Promise.all( tokensOfInterest.map(
       token => contractCache(erc20abi, token).methods.balanceOf(addr).call()
-        .then( bal => updateToken( token, {[addr]:bal} ) )
+        .then( bal => updateContract( token, {[addr]:bal} ) )
     ));
 
 const getRogueSeller = (addr) => contractCache(CRogueObject.Babi, addr).methods.seller().call()
@@ -122,9 +122,9 @@ const getRogueRow = (addr,n) => contractCache(CRogueObject.Babi, addr).methods.g
 
 /* Do the thing ...
  */
-checkOnChain()
+(new Promise( r=> r(true) ))
+  .then( () => checkOnChain() )
   .then( () => getHolderRogueList(target) )
-  .then( bist => bist.map(id2addr) )
   .then( list => Promise.all( [
     ...tokensOfInterest.map( y => getERC20Statics(y) ),
     ...list.map( y => getRogueBalances(y) ),
