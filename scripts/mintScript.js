@@ -5,7 +5,9 @@ const { parse } = require('querystring');
 
 let nRogueObject = "rogueObject";
 let cRogueObject = nRogueObject+".sol:rogueObject";
-var fRogueObject = "0xFf8BFaba865C8cd0362F2302aaaF74d7409bD65e";
+//var fRogueObject = "0xFf8BFaba865C8cd0362F2302aaaF74d7409bD65e";
+//var fRogueObject = "0xF4042119Aa081df687A563A59503ABdDfbAbCfbB";
+var fRogueObject = "0x23628153CbAd2f4B55Dd0c62cEb22104b333d5cB";
 
 let nRogueHolder = "rogueHolder";
 let cRogueHolder = 'rogueHolder.sol:rogueHolder';
