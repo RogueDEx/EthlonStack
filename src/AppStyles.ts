@@ -51,6 +51,7 @@ export const AppLogoText = styled.div`
 
 export const AppImage = styled.img`
   margin: 20px auto 50px auto;
+  height: 157px;
 `
 export const AppLogoImage = styled.img`
   margin-right: 20px;
