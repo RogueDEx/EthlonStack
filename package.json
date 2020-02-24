@@ -1,5 +1,7 @@
 {
   "name": "ethlon-musk",
+  "home": "./",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -40,5 +42,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^4.4.3"
-  }
+  },
+  "proxy": "http://localhost:36363"
+  
 }

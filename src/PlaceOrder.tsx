@@ -10,35 +10,17 @@ import { AssetPriceTitle, AssetPrice, InnerContainer, PlaceOrderContainer } from
 
 interface PlaceOrderProps {
   colony: string
-  tokenBalance: number
-  walletAddress: string
+  vibeBalance: number
+  usdBalance: number
+  rogueAddress: string
+  web3: Web3
 }
 
-export const PlaceOrder: FC<PlaceOrderProps> = ({ colony, tokenBalance, walletAddress }) => {
+export const PlaceOrder: FC<PlaceOrderProps> = ({ colony, vibeBalance, usdBalance, rogueAddress, web3 }) => {
   const [input, setInput] = useState<string>(colony)
   const [output, setOutput] = useState<string>('USD')
-  const [usdBalance, setUsdBalance] = useState<number>(0)
   const [inputAmount, setInputAmount] = useState<number>(0)
   const [outputAmount, setOutputAmount] = useState<number>(0)
-
-  useInterval(() => {
-    async function checkBalance() {
-      if (walletAddress === '') {
-        return
-      }
-      const usdContractAddress = ''
-      const web3 = new Web3('wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac')
-      // @ts-ignore
-      const contract: Contract = new web3.eth.Contract(erc721Json, usdContractAddress)
-      const someResponseToParse = await contract.methods.ownedBy(walletAddress).call()
-      console.log('someResponseToParse response', someResponseToParse)
-      const formattedBalance = Number(someResponseToParse)
-      if (formattedBalance > 0) {
-        return setUsdBalance(formattedBalance)
-      }
-    }
-    checkBalance()
-  }, 10000);
 
   const assetPrice = inputAmount !== 0 && outputAmount !== 0 ?
     output === 'USD' ?
@@ -50,7 +32,6 @@ export const PlaceOrder: FC<PlaceOrderProps> = ({ colony, tokenBalance, walletAd
     if (inputAmount === 0 || outputAmount === 0) {
       alert('please enter both an input and output amount')
     }
-    const web3 = new Web3('wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac')
     // @ts-ignore
     const contract: Contract = new web3.eth.Contract(erc721Json, usdContractAddress)
     const response = await contract.methods.updateRow().call()
@@ -59,22 +40,22 @@ export const PlaceOrder: FC<PlaceOrderProps> = ({ colony, tokenBalance, walletAd
 
   return (
     <PlaceOrderContainer>
-      <MainLabel>{`You have ${tokenBalance} Elysium tokens`}</MainLabel>
-      <MainLabel>{`You have ${usdBalance} USD tokens`}</MainLabel>
+      <MainLabel>{`You have ${vibeBalance} Elysium token(s)`}</MainLabel>
+      <MainLabel>{`You have ${usdBalance} USD`}</MainLabel>
       <MainLabel>Place public order</MainLabel>
       <InnerContainer>
-        <PlaceOrderFields label="Input" type={input} setAmount={setInputAmount} tokenBalance={tokenBalance} />
+        <PlaceOrderFields label="Input" type={input} setAmount={setInputAmount} tokenBalance={vibeBalance} />
         <div onClick={() => {
           setInput(output)
           setOutput(input)
         }}>{`<-->`}</div>
-        <PlaceOrderFields label="Output" type={output} setAmount={setOutputAmount} tokenBalance={tokenBalance} />
+        <PlaceOrderFields label="Output" type={output} setAmount={setOutputAmount} tokenBalance={usdBalance} />
       </InnerContainer>
       <AssetPriceTitle>Asset Price</AssetPriceTitle>
       <AssetPrice>
         {assetPrice}
       </AssetPrice>
-      <Button onClick={placeOrder}>{tokenBalance === 0 ? 'Purchase to bid' : 'Place bid'}</Button>
+      <Button onClick={placeOrder}>{vibeBalance === 0 ? 'Purchase to bid' : 'Place bid'}</Button>
     </PlaceOrderContainer>
   )
 }

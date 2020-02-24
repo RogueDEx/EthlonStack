@@ -23,8 +23,8 @@ let jRogueHolder = require('../contracts/'+nRogueHolder+'/combined' );
 
 let erc20abi = require('../src/abi/erc20' );
 
-const web3 = new Web3("ws://localhost:8546");
-//const web3 = new Web3( "wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac")
+// const web3 = new Web3("ws://localhost:8546");
+const web3 = new Web3( "wss://rinkeby.infura.io/ws/v3/88763c0ddb9b411dbcc2e6d1e4c1a5ac")
 const E = web3.eth;
 const A = web3.eth.accounts;
 const U = web3.utils;
